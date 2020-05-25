@@ -1,7 +1,5 @@
 # 5-gcp-INSTANCE-GROUPS-I-AUTOSKALOWANIE
 
-### [Health Checks](https://szkolachmury.pl/google-cloud-platform-droga-architekta/tydzien-5-instance-groups-i-autoskalowanie/health-checks-hands-on/)
-
 #### Komenda do zasymulowania obciążenia procesora:
 
 > dd if=/dev/zero of=/dev/null
