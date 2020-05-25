@@ -5,4 +5,9 @@ Compute Engine > Health checks:
 1. Create Health checks.
 2. Name: autohealing.
 3. Request path np. /health Jest to ścieżka jaką Health checks będzie odpytywał.
+4. Health criteria to parametry, które definiują sposób sprawdzania stanu aplikacji/node. 
+- 
+
+
+
 
