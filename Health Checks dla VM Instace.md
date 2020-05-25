@@ -14,11 +14,30 @@ Compute Engine > Instance templates:
 3. Firewalls:
 - Allow HTTP traffic
 - Allow HTTPS traffic
-4. Startup script:
+4. Startup script (do symulacji działania Health checks):
+
 git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git 
 cd python-docs-samples/compute/managed-instances/demo 
 sudo pip3 install -r requirements.txt 
 sudo gunicorn3 --bind 0.0.0.0:80 app:app --daemon
+
+Networking > VPC network > Firewall rules:
+
+Health checks symuluje zew. ruch dlatego trzeba ustawić regułę na firewall umożliwiającą mu dostęp. 
+
+1. Create Firewall rules.
+2. Name: allow-http.
+3. Priorytet: 100.
+4. Traffic: Ingress (ruch przychodzący).
+5. Target: All instances in the network
+6. IP ranges: 0.0.0.0/0
+7. Port tcp: 80
+
+Compute Engine > Instance groups:
+
+
+
+
 
 
 
