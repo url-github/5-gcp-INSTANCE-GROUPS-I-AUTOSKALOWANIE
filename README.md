@@ -1,5 +1,3 @@
-# 5-gcp-INSTANCE-GROUPS-I-AUTOSKALOWANIEv2
-
 # 5-gcp-INSTANCE-GROUPS-I-AUTOSKALOWANIE
 
 #### Komenda do zasymulowania obciążenia procesora:
