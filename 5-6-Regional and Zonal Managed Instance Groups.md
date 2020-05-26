@@ -38,8 +38,8 @@
 ### Usunięcie
 
 ```bash
-gcloud compute instance-groups managed delete rmig1 --region us-east1
-gcloud compute instance-groups managed delete rmig2 --region us-east1
-gcloud compute instance-groups managed delete rmig3 --region us-east1
-gcloud compute instance-templates delete template-pm
+> gcloud compute instance-groups managed delete rmig1 --region us-east1
+> gcloud compute instance-groups managed delete rmig2 --region us-east1
+> gcloud compute instance-groups managed delete rmig3 --region us-east1
+> gcloud compute instance-templates delete template-pm
 ```
