@@ -113,3 +113,13 @@ instances-pm-vvg0  us-central1-c  RUNNING  HEALTHY       NONE    template
 instances-pm-k7wp  us-central1-f  RUNNING  HEALTHY       NONE    template
 ```
 </details>
+
+<details>
+  <summary><b><i>Wynik</i></b></summary>
+
+```bash
+
+gcloud compute instance-groups managed list-instances mig1 --region us-central1
+
+```
+</details>
