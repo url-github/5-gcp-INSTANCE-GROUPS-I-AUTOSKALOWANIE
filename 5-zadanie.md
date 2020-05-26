@@ -120,6 +120,8 @@ template-mig-pm-jhk9  us-central1-f  RUNNING  HEALTHY       NONE    template-pm
 ```
 </details>
 
+### 2.5 Test autoskalowania (obciążenie środowiska)
+
 <details>
   <summary><b><i>Wynik</i></b></summary>
  
@@ -139,7 +141,6 @@ template-mig-pm-tzds  us-central1-c  RUNNING  HEALTHY       NONE      template-p
 template-mig-pm-v64k  us-central1-c           UNKNOWN       CREATING  template-pm                      Error QUOTA_EXCEEDED: Instance 'template-mig-pm-v64k' creation failed: Quota 'IN_USE_ADDRESSES' exceeded.  Limit: 4.0 in region us-central1.
 template-mig-pm-jhk9  us-central1-f  RUNNING  HEALTHY       NONE      template-pm
 template-mig-pm-w5wb  us-central1-f           UNKNOWN       CREATING  template-pm                      Error QUOTA_EXCEEDED: Instance 'template-mig-pm-w5wb' creation failed: Quota 'IN_USE_ADDRESSES' exceeded.  Limit: 4.0 in region us-central1.
-
 ```
 </details>
 
@@ -149,12 +150,17 @@ template-mig-pm-w5wb  us-central1-f           UNKNOWN       CREATING  template-p
   <summary><b><i>Status przed</i></b></summary>
 
 ```bash
-bartosz@cloudshell:~ (resonant-idea-261413)$ gcloud compute instance-groups managed list-instances $migName --region $migRegion
-NAME                     ZONE           STATUS   ACTION  INSTANCE_TEMPLATE   VERSION_NAME  LAST_ERROR
-webserver-template-3kjd  us-central1-b  RUNNING  NONE    webserver-template
-webserver-template-t1pt  us-central1-c  RUNNING  NONE    webserver-template
-webserver-template-hhv3  us-central1-f  RUNNING  NONE    webserver-template
+
+gcloud compute instance-groups managed list-instances mig1 --region us-central1
 ```
 </details>
 
+<details>
+  <summary><b><i>Status po</i></b></summary>
+
+```bash
+gcloud compute instance-groups managed list-instances mig1 --region us-central1
+
+```
+</details>
 
