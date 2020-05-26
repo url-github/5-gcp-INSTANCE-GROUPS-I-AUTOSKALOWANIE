@@ -5,4 +5,17 @@
 
 ### [Distributing instances by using regional MIGs](https://cloud.google.com/compute/docs/instance-groups/distributing-instances-with-regional-instance-groups)
 
-### Compute Engine > Health checks:
+### Tworzenie Instance groups w modelu Regional (automatyczny wybór Zonal)
+
+1. Aby stworzyć jakąkolwiek Instance Groups muszę stworzyć Instance Templates.
+
+bigdata_pw_2020@cloudshell:~ (affable-doodad-259911)$ gcloud compute instance-templates create example-template
+Created [https://www.googleapis.com/compute/v1/projects/affable-doodad-259911/global/instanceTemplates/example-template].
+NAME              MACHINE_TYPE   PREEMPTIBLE  CREATION_TIMESTAMP
+example-template  n1-standard-1               2020-05-26T03:14:55.644-07:00
+
+### Tworzenie Instance groups w modelu Regional (wskazanie na konkretne Zonal)
+
+### Tworzenie Instance groups w modelu Regional (wyłączona autodystrybucja VM)
+
+
