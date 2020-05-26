@@ -43,4 +43,33 @@ gcloud compute health-checks create http healthcheck-pm \
 # Sprawdzenie
 gcloud compute health-checks list
 ```
+### 2.2 Utworzenie template dla MIG
+
+```bash
+
+- template = nazwa template nr 1
+- template-new = nazwa template nr 2
+
+# Wersja 1
+gcloud compute instance-templates create template \
+    --machine-type f1-micro \
+    --tags http-server \
+    --metadata startup-script='
+  sudo apt-get update && sudo apt-get install git gunicorn3 python3-pip -y
+  git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git
+  cd python-docs-samples/compute/managed-instances/demo
+  sudo pip3 install -r requirements.txt
+  sudo gunicorn3 --bind 0.0.0.0:80 app:app --daemon'
+  
+# Wersja 2
+   
+gcloud compute instance-templates create template-new \
+--image-family debian-9 \
+--image-project debian-cloud \
+--tags=http-server \
+--machine-type=f1-micro \
+--metadata=startup-script=\#\!/bin/bash$'\n'sudo\ apt-get\ update\ $'\n'sudo\ apt-get\ install\ -y\ nginx\ $'\n'sudo\ service\ nginx\ start\ $'\n'sudo\ sed\ -i\ --\ \"s/Welcome\ to\ nginx/Version:2\ -\ Welcome\ to\ \$HOSTNAME/g\"\ /var/www/html/index.nginx-debian.html
+ 
+```
+
 
