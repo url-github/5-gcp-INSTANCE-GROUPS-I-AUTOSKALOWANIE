@@ -28,4 +28,11 @@
 
 > gcloud beta compute instance-groups managed create rmig3 --template template-pm --base-instance-name instances --size 3 --zones us-east1-b,us-east1-c --instance-redistribution-type NONE
 
+### Usunięcie
 
+```bash
+gcloud compute instance-groups managed delete rmig1 --region us-east1
+gcloud compute instance-groups managed delete rmig2 --region us-east1
+gcloud compute instance-groups managed delete rmig3 --region us-east1
+gcloud compute instance-templates delete template-pm
+```
