@@ -45,10 +45,10 @@ gcloud compute health-checks list
 ```
 ### 2.2 Utworzenie template dla MIG
 
-```bash
-
 - template = nazwa template nr 1
 - template-new = nazwa template nr 2
+
+```bash
 
 # Wersja 1
 gcloud compute instance-templates create template \
