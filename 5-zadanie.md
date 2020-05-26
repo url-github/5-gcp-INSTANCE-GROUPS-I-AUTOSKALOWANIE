@@ -25,5 +25,21 @@ Użycie [Managed Instance Groups](https://cloud.google.com/compute/docs/instance
 3. Jeśli po określonym czasie w strefie nie zostaną odnotowane żadne nieprawidłowości, wykonanie **rolling update** w pozostałych strefach.
 4. Jeśli wystąpią nieprawidłowości, zbyt wiele błędów lub za dużo niezadowolonych użytkowników nastapi cofnięcie wersji do poprzedniej.
 
+# 2. Demo
 
+### 2.1 Utworzenie `Health check`
+```bash
+healthCheckName="autohealer-check"
+
+# Utworzenie
+gcloud compute health-checks create http $healthCheckName \
+    --check-interval 10 \
+    --timeout 5 \
+    --healthy-threshold 3 \
+    --unhealthy-threshold 3 \
+    --request-path "/health"
+
+# Sprawdzenie
+gcloud compute health-checks list
+```
 
