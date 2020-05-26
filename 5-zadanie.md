@@ -51,6 +51,7 @@ gcloud compute health-checks list
 ```bash
 
 # Wersja 1
+
 gcloud compute instance-templates create template \
     --machine-type f1-micro \
     --tags http-server \
