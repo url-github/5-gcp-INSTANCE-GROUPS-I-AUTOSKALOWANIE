@@ -28,11 +28,12 @@ Użycie [Managed Instance Groups](https://cloud.google.com/compute/docs/instance
 # 2. Demo
 
 ### 2.1 Utworzenie `Health check`
+
 ```bash
-healthCheckName="autohealer-check"
+- healthcheck-pm = nazwa Health check
 
 # Utworzenie
-gcloud compute health-checks create http $healthCheckName \
+gcloud compute health-checks create http healthcheck-pm \
     --check-interval 10 \
     --timeout 5 \
     --healthy-threshold 3 \
