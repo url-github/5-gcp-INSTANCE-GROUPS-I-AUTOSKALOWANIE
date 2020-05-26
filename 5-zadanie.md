@@ -29,8 +29,9 @@ Użycie [Managed Instance Groups](https://cloud.google.com/compute/docs/instance
 
 ### 2.1 Utworzenie `Health check`
 
-```bash
 - healthcheck-pm = nazwa Health check
+
+```bash
 
 # Utworzenie
 gcloud compute health-checks create http healthcheck-pm \
@@ -72,5 +73,43 @@ gcloud compute instance-templates create template-new \
 --metadata=startup-script=\#\!/bin/bash$'\n'sudo\ apt-get\ update\ $'\n'sudo\ apt-get\ install\ -y\ nginx\ $'\n'sudo\ service\ nginx\ start\ $'\n'sudo\ sed\ -i\ --\ \"s/Welcome\ to\ nginx/Version:2\ -\ Welcome\ to\ \$HOSTNAME/g\"\ /var/www/html/index.nginx-debian.html
  
 ```
+### 2.3 Utworzenie `Managed instance group` z włączonym autohealingiem
 
+migName="webserver-group"
+migRegion="us-central1"
 
+```bash
+
+gcloud compute instance-groups managed create mig1 \
+    --region us-central1 \
+    --template template \
+    --base-instance-name instances-pm \
+    --size 3 \
+    --health-check healthcheck-pm \
+    --initial-delay 90 
+    
+```
+### 2.4 Konfiguracja autoskalowania
+
+```bash
+gcloud compute instance-groups managed set-autoscaling mig1 \
+    --region us-central1 \
+    --min-num-replicas 3 \
+    --max-num-replicas 8 \
+    --target-cpu-utilization "0.5"
+```
+
+<details>
+  <summary><b><i>Status</i></b></summary>
+
+```bash
+
+gcloud compute instance-groups managed list-instances mig1 --region us-central1
+
+bigdata_pw_2020@cloudshell:~ (affable-doodad-259911)$ gcloud compute instance-groups managed list-instances mig1 --region us-central1
+NAME               ZONE           STATUS   HEALTH_STATE  ACTION  INSTANCE_TEMPLATE  VERSION_NAME  LAST_ERROR
+instances-pm-8xc0  us-central1-b  RUNNING  HEALTHY       NONE    template
+instances-pm-vvg0  us-central1-c  RUNNING  HEALTHY       NONE    template
+instances-pm-k7wp  us-central1-f  RUNNING  HEALTHY       NONE    template
+```
+</details>
