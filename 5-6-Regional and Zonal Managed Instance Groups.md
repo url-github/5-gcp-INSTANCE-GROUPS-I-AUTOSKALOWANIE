@@ -15,31 +15,31 @@
 1. Aby stworzyć jakąkolwiek Instance Groups muszę najpierw stworzyć Instance Templates.
 
 ```bash
-> gcloud compute instance-templates create template-pm
+gcloud compute instance-templates create template-pm
 ```
 
 2. To polecenie tworzy regionalną grupę instancji zarządzanych w trzech strefach w regionie us-east1.
 
 ```bash
-> gcloud compute instance-groups managed create rmig1 --template template-pm --base-instance-name instances-pm --size 3 --region us-east1
+gcloud compute instance-groups managed create rmig1 --template template-pm --base-instance-name instances-pm --size 3 --region us-east1
 ```
 ### Tworzenie Instance groups w modelu Regional (wskazanie na konkretne Zonal za pomocą flagi --zones)
 
 ```bash
-> gcloud compute instance-groups managed create rmig2 --template template-pm --base-instance-name instances-pm --size 3 --zones us-east1-b,us-east1-c
+gcloud compute instance-groups managed create rmig2 --template template-pm --base-instance-name instances-pm --size 3 --zones us-east1-b,us-east1-c
 ```
 
 ### Tworzenie Instance groups w modelu Regional (wyłączona autodystrybucja VM)
 
 ```bash
-> gcloud beta compute instance-groups managed create rmig3 --template template-pm --base-instance-name instances --size 3 --zones us-east1-b,us-east1-c --instance-redistribution-type NONE
+gcloud beta compute instance-groups managed create rmig3 --template template-pm --base-instance-name instances --size 3 --zones us-east1-b,us-east1-c --instance-redistribution-type NONE
 ```
 
 ### Usunięcie
 
 ```bash
-> gcloud compute instance-groups managed delete rmig1 --region us-east1
-> gcloud compute instance-groups managed delete rmig2 --region us-east1
-> gcloud compute instance-groups managed delete rmig3 --region us-east1
-> gcloud compute instance-templates delete template-pm
+gcloud compute instance-groups managed delete rmig1 --region us-east1
+gcloud compute instance-groups managed delete rmig2 --region us-east1
+gcloud compute instance-groups managed delete rmig3 --region us-east1
+gcloud compute instance-templates delete template-pm
 ```
