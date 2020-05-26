@@ -43,17 +43,20 @@ gcloud compute health-checks create http healthcheck-pm \
 
 # Sprawdzenie
 gcloud compute health-checks list
-```
-### 2.2 Utworzenie template dla MIG
 
-- template = nazwa template nr 1
-- template-new = nazwa template nr 2
+bigdata_pw_2020@cloudshell:~ (affable-doodad-259911)$ gcloud compute health-checks list
+NAME            PROTOCOL
+healthcheck-pm  HTTP
+```
+### 2.2 Utworzenie Instance template dla MIG
+
+- template-pm = nazwa nr 1
+- template-pm-new = nazwa nr 2
 
 ```bash
-
 # Wersja 1
 
-gcloud compute instance-templates create template \
+gcloud compute instance-templates create template-pm \
     --machine-type f1-micro \
     --tags http-server \
     --metadata startup-script='
@@ -65,25 +68,28 @@ gcloud compute instance-templates create template \
   
 # Wersja 2
    
-gcloud compute instance-templates create template-new \
+gcloud compute instance-templates create template-pm-new \
 --image-family debian-9 \
 --image-project debian-cloud \
 --tags=http-server \
 --machine-type=f1-micro \
---metadata=startup-script=\#\!/bin/bash$'\n'sudo\ apt-get\ update\ $'\n'sudo\ apt-get\ install\ -y\ nginx\ $'\n'sudo\ service\ nginx\ start\ $'\n'sudo\ sed\ -i\ --\ \"s/Welcome\ to\ nginx/Version:2\ -\ Welcome\ to\ \$HOSTNAME/g\"\ /var/www/html/index.nginx-debian.html
- 
+--metadata=startup-script='
+#!/bin/bash
+sudo apt-get update 
+sudo apt-get install -y nginx 
+sudo service nginx start 
+sudo sed -i -- "s/Welcome to nginx/Version:2 - Welcome to $HOSTNAME/g" /var/www/html/index.nginx-debian.html'
 ```
 ### 2.3 Utworzenie `Managed instance group` z włączonym autohealingiem
 
-migName="webserver-group"
-migRegion="us-central1"
+- mig1 = nazwa MIG 
+- us-central1 = region dla MIG
 
 ```bash
-
 gcloud compute instance-groups managed create mig1 \
     --region us-central1 \
-    --template template \
-    --base-instance-name instances-pm \
+    --template template-pm \
+    --base-instance-name template-mig-pm \
     --size 3 \
     --health-check healthcheck-pm \
     --initial-delay 90 
@@ -107,19 +113,32 @@ gcloud compute instance-groups managed set-autoscaling mig1 \
 gcloud compute instance-groups managed list-instances mig1 --region us-central1
 
 bigdata_pw_2020@cloudshell:~ (affable-doodad-259911)$ gcloud compute instance-groups managed list-instances mig1 --region us-central1
-NAME               ZONE           STATUS   HEALTH_STATE  ACTION  INSTANCE_TEMPLATE  VERSION_NAME  LAST_ERROR
-instances-pm-8xc0  us-central1-b  RUNNING  HEALTHY       NONE    template
-instances-pm-vvg0  us-central1-c  RUNNING  HEALTHY       NONE    template
-instances-pm-k7wp  us-central1-f  RUNNING  HEALTHY       NONE    template
+NAME                  ZONE           STATUS   HEALTH_STATE  ACTION  INSTANCE_TEMPLATE  VERSION_NAME  LAST_ERROR
+template-mig-pm-x075  us-central1-b  RUNNING  HEALTHY       NONE    template-pm
+template-mig-pm-3794  us-central1-c  RUNNING  HEALTHY       NONE    template-pm
+template-mig-pm-jhk9  us-central1-f  RUNNING  HEALTHY       NONE    template-pm
 ```
 </details>
 
 <details>
   <summary><b><i>Wynik</i></b></summary>
+ 
+ Niektóre VM wywalają się!
 
 ```bash
 
 gcloud compute instance-groups managed list-instances mig1 --region us-central1
+
+bigdata_pw_2020@cloudshell:~ (affable-doodad-259911)$ gcloud compute instance-groups managed list-instances mig1 --region us-central1
+NAME                  ZONE           STATUS   HEALTH_STATE  ACTION    INSTANCE_TEMPLATE  VERSION_NAME  LAST_ERROR
+template-mig-pm-jl23  us-central1-b           UNKNOWN       CREATING  template-pm                      Error QUOTA_EXCEEDED: Instance 'template-mig-pm-jl23' creation failed: Quota 'IN_USE_ADDRESSES' exceeded.  Limit: 4.0 in region us-central1.
+template-mig-pm-pp0c  us-central1-b           UNKNOWN       CREATING  template-pm                      Error QUOTA_EXCEEDED: Instance 'template-mig-pm-pp0c' creation failed: Quota 'IN_USE_ADDRESSES' exceeded.  Limit: 4.0 in region us-central1.
+template-mig-pm-x075  us-central1-b  RUNNING  HEALTHY       NONE      template-pm
+template-mig-pm-3794  us-central1-c  RUNNING  HEALTHY       NONE      template-pm
+template-mig-pm-tzds  us-central1-c  RUNNING  HEALTHY       NONE      template-pm
+template-mig-pm-v64k  us-central1-c           UNKNOWN       CREATING  template-pm                      Error QUOTA_EXCEEDED: Instance 'template-mig-pm-v64k' creation failed: Quota 'IN_USE_ADDRESSES' exceeded.  Limit: 4.0 in region us-central1.
+template-mig-pm-jhk9  us-central1-f  RUNNING  HEALTHY       NONE      template-pm
+template-mig-pm-w5wb  us-central1-f           UNKNOWN       CREATING  template-pm                      Error QUOTA_EXCEEDED: Instance 'template-mig-pm-w5wb' creation failed: Quota 'IN_USE_ADDRESSES' exceeded.  Limit: 4.0 in region us-central1.
 
 ```
 </details>
