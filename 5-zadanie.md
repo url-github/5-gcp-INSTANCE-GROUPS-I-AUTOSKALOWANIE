@@ -11,7 +11,7 @@ MountKirk Games poprosiło cię, abyś przeprojektował aktualną architekturę,
 ## 1.1 Opis
 Użycie [Managed Instance Groups](https://cloud.google.com/compute/docs/instance-groups/) pozwoli spełnić powyższe założenia:
 * Zapewnienie **High availability**:
-  * **Keeping instances running** - w przypadku niezamierzonego wyłączenia/usunięcia maszyny, VM zostanie automatycznie odtworzona na nowo
+  * **Keeping instances running** - w przypadku niezamierzonego wyłączenia/usunięcia maszyny lub awarii, VM zostanie automatycznie odtworzona na nowo
   * [**Autohealing**](https://cloud.google.com/compute/docs/instance-groups/#autohealing) - w przypadku błędnego kodu odpowiedzi z aplikacji, maszyna zostanie usunięta i odtworzona na nowo
   * [**Regional (multiple zone) coverage**](https://cloud.google.com/compute/docs/instance-groups/#types_of_managed_instance_groups) - umieszczenie maszyn w różnych strefach pozwala na zabezpieczenie się przed awarią jednego z nich oraz rozłożeniem ruchu pomiędzy strefy. Natomiast umieszczenie maszyn w różnych regionach pomaga zmniejszyć opóźnienie w przypadku posiadania użytkowników z różnych części świata. W wyborze regionów pomóc może zbieranie metryk z informacją o lokalizacji użytkownika, ich ilości w danym regionie oraz występujących opóźnieniach.
   * [**Load balancing**](https://cloud.google.com/compute/docs/instance-groups/#load_balancing) - równomierne rozłożenie ruchu pomiędzy maszynami w danej strefie oraz pomiędzy samymi strefami. Wybór regionu do którego użytkownik zostanie przekierowany na podstawie najkrótszego opóźnienia. W przypadku awarii regionu/strefy tymczasowe przekierowanie ruchu do działającego regionu/strefy (zapewnienie **HA**).
